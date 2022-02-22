@@ -1,8 +1,4 @@
-from asyncio.windows_events import NULL
 import os
-import pprint
-from numpy import empty
-import pandas as pd
 
 #lendo o arquivo de pontuação
 with open('punctuation.txt', 'r') as f:
