@@ -11,40 +11,9 @@ CODIGO FONTE - MODELO BOOLEANO E ÍNDICE INVERTIDO
 import os
 
 
-def read_files():
-    # definindo variaveis globais
-    global punctuation
-    global stopwords
-    global dict_terms
-    global docs
-
-    path = "collection_docs"  # caminho do diretório que contem a coleção de documentos
-    docs = {}  # criando dicionário vazio que irá armazenar o conjunto de documentos
-    # criando dicionario vazio que irá armazenas os termos do conjunto de documentos
-    dict_terms = {}
-
-    # lendo o arquivo de pontuação
-    with open('punctuation.txt', 'r') as f:
-        punctuation = f.read()
-    # separando todas as pontuações e inserindo em formato de lista em punctuation
-    punctuation = punctuation.split()
-
-    # lendo o arquivo de stopwords
-    with open('stopwords_ptbr.txt', 'r', encoding="utf8") as f:
-        stopwords = f.read()
-    # separando todas as stopwords e inserindo em formato de lista em stopwords
-    stopwords = stopwords.split("\n")
-
-    # lendo todos os arquivos dentro do diretorio no caminho PATH
-    for filename in os.listdir(path):
-        # abrindo arquivo com encoding utf8 para receber acentos e caracteres especiais adequadamente
-        with open(os.path.join(path, filename), 'r', encoding="utf8") as f:
-            # salvando conteudo dos arquivos na lista de documentos
-            docs[filename] = f.readlines()
-
-
 def main():
-    read_files()  # função que lê e preenche as variaveis globais que serão usadas por todo o código
+    # função que lê e preenche as variaveis globais que serão usadas por todo o código
+    read_documents()
 
     # preparando os documentos retirando pontuações e stopwords
     document01 = prepare_doc('doc1_patinho_feio.txt')
@@ -76,7 +45,6 @@ def main():
 
 def consulta_booleana(pesquisa):
     docs_pesquisa = []
-
     for p in pesquisa:  # percorrendo os termos de pesquisa fornecidos pelo usuário
         if dict_terms.get(p) is not None:  # se o termo existir
             print(p + " : " + dict_terms.get(p))
@@ -85,7 +53,7 @@ def consulta_booleana(pesquisa):
             # inserindo o numero dos documentos de cada termo na lista
             docs_pesquisa.append(aux)
 
-    if len(docs_pesquisa) == 0:  # caso nenhum termo for encontrado, encerra
+    if len(docs_pesquisa) == 0:  # caso nenhum termo for encontrado nos termos mapeados, encerra
         print("Nenhum termo de pesquisa valido foi encontrado")
         exit()
 
@@ -98,7 +66,6 @@ def consulta_booleana(pesquisa):
             docs_pesquisa[dc])  # função de intersecção
 
     result_pesquisa = sorted(result_pesquisa)
-
     if(len(result_pesquisa) > 1):
         print("A pesquisa retornou os seguintes documentos: ",
               result_pesquisa)
@@ -119,6 +86,8 @@ def criar_indice_invertido(document, num):  # criando indice invertido
             # atualiza a lista de documentos do termo
             dict_terms.update({d: x+num})
 
+    print(dict_terms.items())
+
 
 def prepare_doc(file):
     # passando o conteudo de cada arquivo para uma lista de string
@@ -135,6 +104,38 @@ def prepare_doc(file):
     document = [d for d in document if not d in stopwords]
 
     return document
+
+
+def read_documents():
+    # definindo variaveis globais
+    global punctuation
+    global stopwords
+    global dict_terms
+    global docs
+
+    path = "collection_docs"  # caminho do diretório que contem a coleção de documentos
+    docs = {}  # criando dicionário vazio que irá armazenar o conjunto de documentos
+    # criando dicionario vazio que irá armazenas os termos do conjunto de documentos
+    dict_terms = {}
+
+    # lendo o arquivo de pontuação
+    with open('punctuation.txt', 'r') as f:
+        punctuation = f.read()
+    # separando todas as pontuações e inserindo em formato de lista em punctuation
+    punctuation = punctuation.split()
+
+    # lendo o arquivo de stopwords
+    with open('stopwords_ptbr.txt', 'r', encoding="utf8") as f:
+        stopwords = f.read()
+    # separando todas as stopwords e inserindo em formato de lista em stopwords
+    stopwords = stopwords.split("\n")
+
+    # lendo todos os arquivos dentro do diretorio no caminho PATH
+    for filename in os.listdir(path):
+        # abrindo arquivo com encoding utf8 para receber acentos e caracteres especiais adequadamente
+        with open(os.path.join(path, filename), 'r', encoding="utf8") as f:
+            # salvando conteudo dos arquivos na lista de documentos
+            docs[filename] = f.readlines()
 
 
 main()
