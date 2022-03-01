@@ -9,6 +9,7 @@ CODIGO FONTE - MODELO BOOLEANO E ÍNDICE INVERTIDO
 
 # importando o pacote OS para usar funcionalidades que são dependentes do sistema operacional como navegar entre os diretorios e ler arquivos.
 import os
+import pprint
 
 
 def main():
@@ -86,7 +87,8 @@ def criar_indice_invertido(document, num):  # criando indice invertido
             # atualiza a lista de documentos do termo
             dict_terms.update({d: x+num})
 
-    print(dict_terms.items())
+    #with open('Indice_Invertido_termos_mapeados.txt', 'w') as file_name: #
+    #    pprint.pprint(dict_terms, file_name)
 
 
 def prepare_doc(file):
