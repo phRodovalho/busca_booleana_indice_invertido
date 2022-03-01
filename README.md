@@ -8,10 +8,10 @@ Este repositório referente a organização e recuperação de informação, tra
 
 ## Download e execução
 
-Download do Python no ambiente Linux:
-Instale o Python 3 no Linux pelo comando: sudo apt install python3. 
-Não é necessário nenhuma instalação de pacote específico, pois o import os é nativo.
+### Download do Python no ambiente Linux:
+  ### > Instale o Python 3 no Linux pelo comando: sudo apt install python3. 
+  ### > Não é necessário nenhuma instalação de pacote específico, pois o import os é nativo.
   
-Para executar no ambiente Linux:
-Abra o terminal e vá na pasta na qual estão os arquivos.
-Execute o comando python para rodar o arquivo. 
+### Para executar no ambiente Linux:
+  ### > Abra o terminal e vá na pasta na qual estão os arquivos.
+  ### > Execute o comando python para rodar o arquivo. 
